@@ -37,3 +37,9 @@ User = get_user_model()
 User.objects.filter(username=os.environ["DJANGO_SUPERUSER_USERNAME"]).exists() or \
     User.objects.create_superuser(os.environ["DJANGO_SUPERUSER_USERNAME"], os.environ["DJANGO_SUPERUSER_EMAIL"], os.environ["DJANGO_SUPERUSER_PASSWORD"])
 EOF
+
+# Exponha a porta que o Django estará escutando
+EXPOSE 8000
+
+# Substitua o CMD para iniciar o Gunicorn
+CMD ["gunicorn", "AudioQuiz.wsgi:application", "--bind", "0.0.0.0:8000"]
