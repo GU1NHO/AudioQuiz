@@ -2,13 +2,8 @@
 # exit on error
 set -o errexit
 
-apt-get update -y
-
 # Instalar dependências do sistema (se possível)
-apt-get install -y portaudio19-dev python3-dev
-
-apt-get install portaudio19-dev python-all-dev
-
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
 
 echo "Instalando dependências do Python..."
 pip install -r requirements.txt
