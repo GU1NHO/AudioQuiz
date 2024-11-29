@@ -2,12 +2,6 @@
 # exit on error
 set -o errexit
 
-# Atualiza a lista de pacotes do sistema e instala as dependências do apt
-echo "Instalando dependências do sistema..."
-sudo apt-get update
-sudo apt-get install -y $(cat apt-packages.txt)
-
-# Instala as dependências Python a partir do requirements.txt
 echo "Instalando dependências do Python..."
 pip install -r requirements.txt
 
