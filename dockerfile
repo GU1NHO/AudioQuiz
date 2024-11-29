@@ -22,7 +22,8 @@ COPY . .
 # Configuração de variáveis de ambiente para o superuser
 ENV DJANGO_SUPERUSER_USERNAME=admin \
     DJANGO_SUPERUSER_PASSWORD=adminpassword \
-    DJANGO_SUPERUSER_EMAIL=admin@example.com
+    DJANGO_SUPERUSER_EMAIL=admin@example.com \
+    DATABASE_URL=postgresql://audioquiz_database_user:RpCw044mLYhJ0bFLHOCFV2wftwzJy8sQ@dpg-ct516apu0jms73abf19g-a.oregon-postgres.render.com/audioquiz_database
 
 # Rodar os comandos para preparar o banco de dados
 RUN python manage.py collectstatic --no-input

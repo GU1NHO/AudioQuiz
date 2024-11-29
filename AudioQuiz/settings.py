@@ -85,16 +85,18 @@ WSGI_APPLICATION = 'AudioQuiz.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.sqlite3",  # Banco de dados local SQLite por padrão
+        "NAME": BASE_DIR / "db.sqlite3",  # Caminho do banco SQLite
     }
 }
 
+# Se DATABASE_URL estiver presente (como no Render)
 if os.environ.get("DATABASE_URL"):
     DATABASES["default"] = dj_database_url.config(
-        conn_max_age=600,
+        default=os.environ.get("DATABASE_URL"),  # Conecta com a URL fornecida no Render
+        conn_max_age=600,  # Timeout para manter conexões abertas por mais tempo
+        ssl_require=True  # Habilita SSL, importante para conexões de produção
     )
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
