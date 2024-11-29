@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
+# Atualizar os repositórios do apt
+apt-get update
+
+# Instalar o PortAudio (bibliotecas e headers necessários)
+apt-get install -y portaudio19-dev
 
 echo "Instalando dependências do Python..."
 pip install -r requirements.txt
