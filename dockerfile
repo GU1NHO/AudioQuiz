@@ -19,13 +19,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie o código da aplicação para dentro do container
 COPY . .
 
-# Configuração de variáveis de ambiente para o superuser
-ENV DJANGO_SUPERUSER_USERNAME=admin \
-    DJANGO_SUPERUSER_PASSWORD=adminpassword \
-    DJANGO_SUPERUSER_EMAIL=admin@example.com
-
 # Rodar os comandos para preparar o banco de dados
 RUN python manage.py collectstatic --no-input
+RUN python manage.py makemigrations
 RUN python manage.py migrate
 
 # Criar o superusuário se ele não existir
