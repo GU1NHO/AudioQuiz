@@ -4,6 +4,16 @@ set -o errexit
 
 pip install -r requirements.txt
 
+# Atualiza a lista de pacotes do sistema e instala as dependências do apt
+echo "Instalando dependências do sistema..."
+sudo apt-get update
+sudo apt-get install -y $(cat apt-packages.txt)
+
+# Instala as dependências Python a partir do requirements.txt
+echo "Instalando dependências do Python..."
+pip install -r requirements.txt
+
+
 python manage.py collectstatic --no-input
 # adicione linhas abaixo
 python manage.py migrate
