@@ -2,8 +2,6 @@
 # exit on error
 set -o errexit
 
-pip install -r requirements.txt
-
 # Atualiza a lista de pacotes do sistema e instala as dependências do apt
 echo "Instalando dependências do sistema..."
 sudo apt-get update
