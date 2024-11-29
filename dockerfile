@@ -19,6 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie o código da aplicação para dentro do container
 COPY . .
 
+
 # Rodar os comandos para preparar o banco de dados
 RUN python manage.py collectstatic --no-input
 RUN python manage.py makemigrations
