@@ -11,6 +11,7 @@ COPY requirements.txt .
 RUN apt-get update && apt-get install -y \
     portaudio19-dev \
     python3-all-dev \
+    libsndfile1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Instale as dependências do Python
@@ -40,4 +41,4 @@ User.objects.filter(username=os.environ["DJANGO_SUPERUSER_USERNAME"]).exists() o
 EOF
 
 # Substitua o CMD para iniciar o Gunicorn
-CMD ["gunicorn", "AudioQuiz.wsgi:application"]
+CMD ["gunicorn", "AudioQuiz.wsgi:application", "--bind", "0.0.0.0:8000"]
