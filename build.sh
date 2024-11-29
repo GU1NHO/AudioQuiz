@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
-# Atualizar os repositórios do apt
-apt-get update
-
-# Instalar o PortAudio (bibliotecas e headers necessários)
-apt-get install -y portaudio19-dev
-
-# Instalar dependências do Python com o Poetry
-poetry install
 
 echo "Instalando dependências do Python..."
 pip install -r requirements.txt

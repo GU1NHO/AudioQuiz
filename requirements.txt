@@ -23,4 +23,3 @@ tzdata==2024.1
 urllib3==2.2.3
 Wave==0.0.2
 whitenoise==6.7.0
-portaudio
