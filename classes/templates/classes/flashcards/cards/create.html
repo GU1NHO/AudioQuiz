@@ -9,9 +9,9 @@
     {{ form.as_p }}
     <button type="submit" Class ="botaozinho">Adicionar Card</button>
 {% if deck.card_set.exists %}
-        <a href="{% url 'classes:cards' deck.id deck.card_set.first.id %}" class = "botaozinho">Voltar ao Deck</a>
+        <a href="{% url 'classes:cards_in_deck' deck.id %}" class = "botaozinho">Voltar ao Deck</a>
       {% else %}
-        <a href="{% url 'classes:flashcards' deck.classe.id %}" class = "botaozinho">Voltar ao Deck</a>
+        <a href="{% url 'classes:flashcards' deck.classe.id %}" class = "botaozinho">Voltar</a>
 </form>
       
       </div>

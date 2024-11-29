@@ -24,7 +24,8 @@
 
                     <!-- Informações do Aluno -->
                     <div class="student-info">
-                        <p><strong>Nome:</strong> {{ detalhe.aluno.username }}</p>
+                        <p><strong>Nome:</strong> {{ detalhe.aluno.first_name }} {{ detalhe.aluno.last_name }}</p>
+                        <p><strong>Username:</strong> {{ detalhe.aluno.username }}</p>
                         <p><strong>Email:</strong> {{ detalhe.aluno.email }}</p>
                         <p><strong>Classes:</strong>
                             <ul class="student-classes">

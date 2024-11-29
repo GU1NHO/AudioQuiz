@@ -5,7 +5,7 @@
 <form action="{% url 'classes:delete' classe.id %}" method="post">
   {% csrf_token %}
   <h2>
-    Você tem certeza que deseja apagar a classe: {{ classe.turma }}?
+    Você tem certeza que deseja apagar a classe: {{ classe.idioma }} - Turma {{ classe.turma }}?
   </h2>
   <br>
   <button type="submit" class = "delete-button">Apagar</button>

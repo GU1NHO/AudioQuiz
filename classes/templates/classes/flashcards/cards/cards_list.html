@@ -36,8 +36,11 @@
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}" class="botaozinho">Próxima</a>
             {% endif %}
+            
         </div>
     {% endif %}
+    <br>
+    <a href="{% url 'classes:flashcards' deck.classe.id %}" class="botaozinho">Voltar</a>
 {% else %}
     <br>
     <p>Nenhum card disponível neste deck.</p>
@@ -45,6 +48,4 @@
     <a href="{% url 'classes:create_card' deck.id %}" class="botaozinho">Criar o Primeiro Card</a>
     <a href="{% url 'classes:flashcards' deck.classe.id %}" class = "botaozinho">Voltar</a>
 {% endif %}
-<br>
-<a href="{% url 'classes:flashcards' deck.classe.id %}" class="botaozinho">Voltar</a>
 {% endblock content %}

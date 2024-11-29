@@ -246,9 +246,8 @@ class CardCreateView(CreateView):
         """
         Redireciona para o deck após criar o card.
         """
-        return reverse_lazy('classes:cards', kwargs={
+        return reverse_lazy('classes:cards_in_deck', kwargs={
             'deck_id': self.kwargs['deck_id'],
-            'pk': self.object.pk
         })
 
 

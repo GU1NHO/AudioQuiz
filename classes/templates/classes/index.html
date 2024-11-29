@@ -13,9 +13,8 @@
       <section class="notificacoes">
         <br>
         
-            
+          <h3>Notificações</h3> 
           {% for notificacao in user.notificacao_set.all %}
-            <h3>Notificações</h3>
             {% if not notificacao.lida %}
             <ul style="list-style: none;">
               <li>
@@ -31,8 +30,6 @@
                   </a>
                 </div>
               </li>
-            {%else%}
-            <p>Você não possui notificações</p>
             {% endif %}
           {% endfor %}
         </ul>
