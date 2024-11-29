@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Cards do Deck "{{ deck.nome }}"</h1>
+<br>
+{% if cards %}
+
+    <div class="cards-container">
+        <ul class="cards-list">
+            <a href="{% url 'classes:create_card' deck.id %}" class="botaozinho">Novo Card</a>
+            <hr class="page-break2">
+            {% for card in cards %}
+                <li class="card-item">
+                    <span class="card-content">
+                        <a href="{% url 'classes:cards' deck.id card.id %}" class="card-link">
+                            {{ card.lado_frente }} | {{ card.lado_tras }}
+                        </a>
+                    </span>
+                    <div class="card-buttons">
+                        <a href="{% url 'classes:update_card' deck.id card.id %}" class="edit-button">Editar</a>
+                        <a href="{% url 'classes:delete_card' deck.id card.id %}" class="delete-button3">Apagar</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <br>
+    {% if is_paginated %}
+        <div class="pagination">
+            
+
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="botaozinho">Anterior</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="botaozinho">Próxima</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <br>
+    <p>Nenhum card disponível neste deck.</p>
+    <br>
+    <a href="{% url 'classes:create_card' deck.id %}" class="botaozinho">Criar o Primeiro Card</a>
+    <a href="{% url 'classes:flashcards' deck.classe.id %}" class = "botaozinho">Voltar</a>
+{% endif %}
+<br>
+<a href="{% url 'classes:flashcards' deck.classe.id %}" class="botaozinho">Voltar</a>
+{% endblock content %}

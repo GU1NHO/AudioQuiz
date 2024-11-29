@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="page-atividade">
+    <div class="content">
+        <h3>Crie sua Atividade</h3>
+        <div Class="texto">
+        <form method="POST" action="{% url 'classes:atividades_create' Classe.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="conteudo">Selecione o arquivo:</label>
+            <input type="file" name="conteudo" id="conteudo" accept="application/pdf">
+            <button type="submit">Enviar</button>
+            <a href="{% url 'classes:atividades_index' Classe.id %}" class = 'botaozinho'>Voltar</a>
+        </form>
+        </div>
+    </div>
+</div>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

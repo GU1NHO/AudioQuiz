@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="mural-page">
+    <nav class="nav-classe">
+        <a href="{% url 'classes:mural' Classe.id %}" class="active">Mural</a>
+        <a href="{% url 'classes:flashcards' Classe.id %}">Flashcards</a>
+        <a href="{% url 'classes:atividades_index' Classe.id %}">Atividades</a>
+    </nav>
+    <hr class="page-break">
+    <section>
+        <!-- Botão para criar uma nova mensagem -->
+        <a href="{% url 'classes:mensagem' Classe.id %}">
+            <button class="botaozao">Crie sua mensagem</button>
+        </a>
+
+        <!-- Exibir todas as mensagens principais -->
+        <ul class="message-list">
+            {% if mensagens %}
+                {% for mensagem in mensagens %}
+                    {% include 'classes/mural/mensagem_recursiva.html' with mensagem=mensagem classe=Classe %}
+                {% endfor %}
+            {% else %}
+                <p>Ainda não existe nenhuma mensagem neste mural.</p>
+            {% endif %}
+        </ul>
+    </section>
+</div>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

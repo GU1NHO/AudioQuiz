@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container lista-alunos-page">
+    <h1>Alunos Matriculados</h1>
+
+    <!-- Barra de Pesquisa -->
+    <form method="get" class="search-form">
+        <input type="text" name="q" placeholder="Pesquisar por nome ou email" value="{{ search_query }}" class="search-input">
+        <button type="submit" class="botaozinho">Pesquisar</button>
+    </form>
+
+    {% if alunos_detalhes %}
+        <ul class="student-list">
+            {% for detalhe in alunos_detalhes %}
+                <li class="student-item">
+                    <!-- Foto de Perfil -->
+                    {% if detalhe.aluno.poster %}
+                        <img src="{{ detalhe.aluno.poster.url }}" alt="Foto de {{ detalhe.aluno.username }}" class="student-picture">
+                    {% else %}
+                        <img src="{% static 'perfil.svg' %}" alt="Foto Padrão" class="student-picture">
+                    {% endif %}
+
+                    <!-- Informações do Aluno -->
+                    <div class="student-info">
+                        <p><strong>Nome:</strong> {{ detalhe.aluno.username }}</p>
+                        <p><strong>Email:</strong> {{ detalhe.aluno.email }}</p>
+                        <p><strong>Classes:</strong>
+                            <ul class="student-classes">
+                                {% for classe in detalhe.classes %}
+                                    <li class="class-item">{{ classe.turma }} - {{ classe.idioma }}</li>
+                                {% endfor %}
+                            </ul>
+                        </p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-students">Nenhum aluno encontrado.</p>
+    {% endif %}
+    <br>
+    <a href="{% url 'accounts:profile' %}" class="botaozinho">Voltar ao Perfil</a>
+</div>
+{% endblock content %}

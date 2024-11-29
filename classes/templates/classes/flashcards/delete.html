@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<form method="post">
+    {% csrf_token %}
+    <h2>Você tem certeza que deseja apagar o baralho "{{ deck.nome }} ({{ deck.classe.idioma }})"?</h2>
+    <br>
+    <button class= "delete-button" type="submit">Apagar</button>
+    <a href="{% url 'classes:flashcards' deck.classe.id%}" class = "botaozinho">Voltar</a>
+</form>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Você tem certeza de que deseja excluir o card: "{{ object }}"?</h2>
+<br>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Apagar</button>
+    <a href="{% url 'classes:cards_in_deck' deck_id=deck.id %}" class="botaozinho">Voltar</a>
+</form>
+{% endblock %}

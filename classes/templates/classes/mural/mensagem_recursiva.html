@@ -1,0 +1,37 @@
+{% load static %}
+
+<li class="message">
+    <div class="message-content">
+        <div>
+            {% if mensagem.usuario.poster%}
+            <img src="{{ mensagem.usuario.poster.url }}" alt="Foto de Perfil"><br>
+            {% else %}
+            <img src="{% static 'perfil.svg' %}" alt="Imagem Padrão"><br>
+             {% endif %}  
+        </div>
+        <h4>{{ mensagem.usuario.username }}</h4>
+
+        
+        <p>{{ mensagem.conteudo }}</p>
+        <small>Enviado em {{ mensagem.data_envio|date:"d/m/Y H:i" }}</small>
+
+        <!-- Ações de mensagem -->
+        <div class="message-action">
+            <a href="{% url 'classes:responder_mensagem' classe.id mensagem.id %}" class="btn">Responder</a>
+            {% if user.username == mensagem.usuario.username %}
+                <a href="{% url 'classes:delete_message' classe.id mensagem.id %}" class="delete-button">Apagar</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Exibir respostas da mensagem -->
+    {% with mensagem.respostas.all as respostas %}
+    {% if respostas %}
+        <ul class="response-list">
+            {% for resposta in respostas %}
+                {% include 'classes/mural/mensagem_recursiva.html' with tem_respostas=1 mensagem_anterior=mensagem mensagem=resposta classe=classe %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+</li>

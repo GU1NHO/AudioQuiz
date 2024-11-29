@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="page-form">
+  <h2>Alterar Classe {{Classe.turma}}</h2>
+  <hr Class="page-break">
+  <form method="POST" action="{% url 'classes:update' classe.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botaozinho">Alterar</button>
+    <a href="{% url 'classes:index' %}" class = 'botaozinho'>Voltar</a>
+  </form>
+</div>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

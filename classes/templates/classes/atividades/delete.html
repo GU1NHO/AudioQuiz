@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<h2>Tem certeza de que deseja deletar a atividade: {{ object.nome }}?</h2>
+<br>
+<form method="POST" action="">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Sim, deletar</button>
+    <a href="{% url 'classes:atividades_index' object.classe.id %}" class="botaozinho">Cancelar</a>
+</form>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

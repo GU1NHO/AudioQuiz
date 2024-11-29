@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+
+    <h1>Classes</h1>
+    <hr class="page-break">
+    <h2>Seja bem-vindo, {{ user.first_name }}</h2>
+    
+    <!-- Notificações para o aluno -->
+    {% if user.tipo == 0 and user.notificacao_set.all %}
+      <section class="notificacoes">
+        <br>
+        
+            
+          {% for notificacao in user.notificacao_set.all %}
+            <h3>Notificações</h3>
+            {% if not notificacao.lida %}
+            <ul style="list-style: none;">
+              <li>
+                <h4>{{ notificacao.titulo }}</h4>
+                <p>{{ notificacao.mensagem }}</p>
+                <br>
+                <div class="acoes">
+                  <a href="{% url 'classes:aceitar_convite' notificacao.id %}" class="aceitar">
+                    Aceitar Convite
+                  </a>
+                  <a href="{% url 'classes:recusar_convite' notificacao.id %}" class="recusar">
+                    Recusar Convite
+                  </a>
+                </div>
+              </li>
+            {%else%}
+            <p>Você não possui notificações</p>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    <!-- Listagem de Classes -->
+      <section class="lista-de-cards">
+        {% for Classe in user.classe_set.all %}
+          <article class="card">
+            <a href="{% url 'classes:mural' Classe.id %}">
+              <img src="{{ Classe.poster_url }}" alt="Poster do {{ Classe.idioma }}" />
+            </a>
+            <p><strong>{{ Classe.idioma }}</strong></p>
+            <p>Turma {{ Classe.turma }}</p>
+            
+            <!-- Professores -->
+            {% for Usuario in Classe.usuarios.all %}
+              {% if Usuario.tipo == 1 %}
+                <p>Professor {{ Usuario.first_name }} {{ Usuario.last_name }}</p>
+              {% endif %}
+            {% endfor %}
+            
+            <!-- Ações para Professores -->
+            {% if user.tipo == 1 %}
+              <div class="acoes">
+                <a href="{% url 'classes:update' Classe.id %}" class="editar">Editar Classe</a>
+                <a href="{% url 'classes:delete' Classe.id %}" class="apagar">Apagar Classe</a>
+              </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+        {% if user.tipo == 0 %}
+          {% if user.classe_set.all %}
+          {% else%}
+          <br>
+          <p>Você não está matriculado em nenhuma classe.</p>
+          {% endif %}
+        {% endif %}
+        <!-- Botão de Criar Nova Classe -->
+        {% if user.tipo == 1 %}
+          <article class="card">
+            <a href="{% url 'classes:create' %}">
+              <div class="card-image-wrapper">
+                <img src="{% static 'Plus square 1.png' %}" alt="Imagem adicionar classe" />
+              </div>
+              <div class="card-content">
+                <p><strong>Criar nova classe</strong></p>
+              </div>
+            </a>
+          </article>
+        {% endif %}
+      </section>
+    
+
+  {% else %}
+    <p>Você não está logado.</p>
+    <br>
+    <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+  {% endif %}
+{% endblock content %}

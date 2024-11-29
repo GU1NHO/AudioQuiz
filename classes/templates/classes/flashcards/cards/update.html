@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-form">
+<h2>Editar Card</h2>
+<hr class="page-break">
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botaozinho">Salvar</button>
+    <a href="{% url 'classes:cards_in_deck' deck_id=deck.id %}" class="botaozinho">Cancelar</a>
+</form>
+</div>
+{% endblock %}

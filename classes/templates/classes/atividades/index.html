@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<html lang="en">
+    <div class="atividades-page">
+        {% if user.is_authenticated %}
+            <nav class="nav-classe">
+                <a href="{% url 'classes:mural' Classe.id %}">Mural</a>
+                <a href="{% url 'classes:flashcards' Classe.id %}">Flashcards</a>
+                <a href="{% url 'classes:atividades_index' Classe.id %}" class="active">Atividades</a>
+            </nav>
+            <hr class="page-break">
+            <section>
+                {% if user.tipo == 1 %}
+                <a href="{% url 'classes:atividades_create' Classe.id %}">
+                    <button class="botaozao" >Crie sua atividade</button>
+                </a>
+                {% endif %}
+                <ul>
+                    {% if Classe.arquivo_set.all %}
+                        {% for arquivo in Classe.arquivo_set.all %}
+                        <figure>
+                            <img src="{% static 'pdf-icon.svg' %}" alt="Ícone do Arquivo">
+                            <blockquote>
+                                {{ arquivo.nome }}
+                            </blockquote>
+                            <figcaption>Upload dia {{ arquivo.data_upload|date:"d/m/Y" }}</figcaption>
+                            <a href="{% url 'classes:download_pdf' arquivo.id %}" class="botaozinho">
+                                Baixar Arquivo
+                            </a>
+                            {% if user.tipo == 1 %}
+                                <div>
+                                <a href="{% url 'classes:atividades_update' arquivo.id %}" class="botaozinho">Editar</a>
+                                <a href="{% url 'classes:atividades_delete' arquivo.id %}" class = "delete-button2" >Apagar</a>
+                                </div>
+                            {% endif %}
+                            
+                        </figure>
+                        {% endfor %}
+                    {% else %}
+                        <p>Ainda não existe nenhuma atividade nesta classe.</p>
+                    {% endif %}
+                </ul>
+            </section>
+        {% else %}
+            <p>Você não está logado. <a href="{% url 'accounts:login' %}">Faça login aqui</a>.</p>
+        {% endif %}
+    </div>
+</html>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

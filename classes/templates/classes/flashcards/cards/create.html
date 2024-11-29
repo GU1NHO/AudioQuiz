@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div Class="page-form">
+<h2>Adicionar Novo Card ao Deck "{{ deck.nome }}"</h2>
+<hr class="page-break">
+<form method="POST" action="{% url 'classes:create_card' deck.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" Class ="botaozinho">Adicionar Card</button>
+{% if deck.card_set.exists %}
+        <a href="{% url 'classes:cards' deck.id deck.card_set.first.id %}" class = "botaozinho">Voltar ao Deck</a>
+      {% else %}
+        <a href="{% url 'classes:flashcards' deck.classe.id %}" class = "botaozinho">Voltar ao Deck</a>
+</form>
+      
+      </div>
+      {% endif %}
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

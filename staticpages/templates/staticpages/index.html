@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AudioQuiz | Potencialize seu aprendizado</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <link rel="shortcut icon" href="{% static 'loguinho.png' %}" type="image/x-icon">
+</head>
+
+<body class="homepage">
+  <header>
+    <div id="logo">
+      <img src="{% static 'AudioQuizEstilizado.svg' %}" alt="Logo AudioQuiz">
+    </div>
+    <div id="potencialize">
+      <p>Potencialize seu aprendizado</p>
+      <a href="{% url 'accounts:signup' %}" class="btn">Cadastre-se já!</a>
+      <a href="{% url 'accounts:login' %}" class="btn">Entrar</a>
+    </div>
+  </header>
+  <main>
+    <section class="features">
+      <div class="feature">
+        <img src="{% static 'Germany.svg' %}" alt="Aprenda idiomas">
+        <div class="feature-text">
+          <h3>+ DE 10 IDIOMAS PARA VOCÊ APRENDER</h3>
+          <p>Aprendizado personalizado e voltado para sua língua de interesse.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <img src="{% static 'France.svg' %}" alt="Documentos e atividades">
+        <div class="feature-text">
+          <h3>Documentos, Atividades e Acompanhamento Personalizado</h3>
+          <ul>
+            <li>Documentos</li>
+            <li>Atividades</li>
+            <li>Acompanhamento personalizado</li>
+          </ul>
+          <p>O AudioQuiz permite que você tenha uma forma de contato próxima com seu professor.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <img src="{% static 'Japan.svg' %}" alt="Prática de Pronúncia">
+        <div class="feature-text">
+          <h3>Prática de Pronúncia</h3>
+          <p>O AudioQuiz permite que você consiga praticar sua pronúncia através de uma tecnologia de reconhecimento de voz, sendo possível realizar seus estudos de forma oral.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

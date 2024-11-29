@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="flashcards-page">
+    {% if user.is_authenticated %}
+      <nav class="nav-classe">
+        <a href="{% url 'classes:mural' Classe.id %}">Mural</a>
+        <a href="{% url 'classes:flashcards' Classe.id %}" class="active">Flashcards</a>
+        <a href="{% url 'classes:atividades_index' Classe.id %}">Atividades</a>
+      </nav>
+      <hr class="page-break">
+
+      <section>
+          <section class="lista-de-cards">
+            {% for Deck in Deck_list %}
+              {% if Deck.card_set.exists %}
+                <article class="card">
+                    <a href="{% url 'classes:cards' Deck.id Deck.card_set.first.id %}">
+                      <img src="{{ Classe.poster_url }}" alt="Poster do {{ Classe.idioma }}" />
+                    </a>
+                    <p><strong>{{ Deck.nome }}</strong></p>
+                    <p>Idioma: {{ Classe.idioma }}</p>
+                    <p>Autor: {{ Deck.usuario.first_name }} {{ Deck.usuario.last_name }}</p>
+                    <p><strong>{{ Deck.n_cartoes }} cards</strong></p>
+                    <p>{{ Deck.n_dominados }} dominados</p>
+                    <p>{{ Deck.n_aprender }} a dominar</p>
+                    <div class="acoes">
+                      <a href="{% url 'classes:cards_in_deck' Deck.id %}" class="editar">Editar Deck</a>
+                      <a href="{% url 'classes:delete_flashcards' Classe.id Deck.id %}" class="apagar">Apagar Deck</a>
+                    </div>
+                  </article>
+              {% else %}
+                  <article class="card">
+                    <a href="{% url 'classes:create_card' Deck.id %}">
+                      <img src="{{ Classe.poster_url }}" alt="Poster do {{ Classe.idioma }}" />
+                    </a>
+                    <p><strong>{{ Deck.nome }}</strong></p>
+                    <p>Idioma: {{ Classe.idioma }}</p>
+                    <p>Autor: {{ Deck.usuario.first_name }} {{ Deck.usuario.last_name }}</p>
+                    <p><strong>{{ Deck.n_cartoes }} cards</strong></p>
+                    <p>{{ Deck.n_dominados }} dominados</p>
+                    <p>{{ Deck.n_aprender }} a dominar</p>
+                    <div class="acoes">
+                      <a href="{% url 'classes:cards_in_deck' Deck.id %}" class="editar">Editar Deck</a>
+                      <a href="{% url 'classes:delete_flashcards' Classe.id Deck.id %}" class="apagar">Apagar Deck</a>
+                    </div>
+                  </article>
+                {% endif %}
+            {% endfor %}
+            <article class="card">
+              <a href="{% url 'classes:create_flashcards' Classe.id%}">
+                <div class="card-image-wrapper">
+                  <img src="{% static 'Plus square 1.png' %}" alt="Imagem adicionar deck" />
+                </div>
+                <div class="card-content">
+                  <p><strong>Criar novo Deck</strong></p>
+                </div>
+              </a>
+            </article>
+
+          </section>
+    {% else %}
+      <p>Você não está logado.</p>
+      <br>
+      <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+    {% endif %}
+  </div>
+
+{% endblock content %}

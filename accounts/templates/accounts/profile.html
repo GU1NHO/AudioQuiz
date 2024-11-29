@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container profile-page">
+    <!-- Informações do usuário -->
+    <div class="profile-info">
+        {% if user.poster %}
+        <img src="{{ user.poster.url }}" alt="Foto de Perfil" class="profile-picture">
+        {% else %}
+        <img src="{% static 'perfil.svg' %}" alt="Imagem Padrão" class="profile-picture">
+        {% endif %}
+        <h2>Bem-vindo, {{ user.first_name}}</h2>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <section class="personal-info">
+            <h2>Dados Pessoais</h2>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Senha:</strong> ************</p>
+            <a href="{% url 'accounts:atualizar_perfil' %}" class="btn btn-primary">Alterar</a>
+        </section>
+
+        <section class="stats">
+            <h2>Estatísticas</h2>
+            {% if user.tipo == 0 %}
+            <!-- Estatísticas para Aluno -->
+            <div class="stat-item">
+                <h3>Progresso</h3>
+                <p>Total de Turmas Matriculadas: <strong>{{ user.classe_set.count }}</strong></p>
+                <p>Cartões Dominados: <strong>{{ total_cartoes_dominados }}</strong></p>
+            </div>
+            {% elif user.tipo == 1 %}
+            <!-- Estatísticas para Professor -->
+            <div class="stat-item">
+                <h3>Classes</h3>
+                <p>Total de Classes: <strong>{{ user.classe_set.count }}</strong></p>
+                <p>Alunos Matriculados: <strong>{{ total_alunos }}</strong></p>
+                <br>
+                <a href="{% url 'accounts:lista_alunos' %}" class="botaozinho">Ver Lista de Alunos</a>
+            </div>
+            <div class="stat-item">
+                <h3>Uploads</h3>
+                <p>Total de Arquivos Enviados: <strong>{{ total_arquivos }}</strong></p>
+            </div>
+            {% endif %}
+        </section>
+        
+        
+    </div>
+
+    <a href="{% url 'logout' %}" class="btn btn-secondary logout-btn">Logout</a>
+</div>
+{% else %}
+<p>Você não está logado.</p>
+<br>
+<a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

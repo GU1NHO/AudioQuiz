@@ -1,0 +1,2011 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+
+:root {
+  --primary-color: #000000;
+  --secondary-color: #118bee;
+  --tertiary-color: #f44d27;
+  --secondary-color-light: #30b2ff;
+  --tertiary-color-light: #ff6d28;
+  --bg-color: #fff;
+  --secondary-bg-color: #e9e9e9;
+  --color-shadow: #f4f4f4;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+}
+
+.botaozao{
+  font-size: 16px;
+  padding: 20px 20px;
+  border-radius: 5px;
+  background-color:  #ffbf01;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botaozao:hover {
+  background-color: #ffd700;
+}
+
+
+.botaozinho{
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  background-color:  #ffbf01;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.botaozinho:hover {
+  background-color: #ffd700;
+  color: black;
+  text-decoration: none
+}
+
+.delete-button{
+  background-color: white;
+  border: 1px solid #dc3545; /* Borda vermelha */
+  color: #dc3545; /* Texto vermelho */
+  padding: 10px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+  text-decoration: none
+}
+
+/* Hover no botão de deletar */
+.delete-button:hover {
+  background-color: #dc3545; /* Fundo vermelho */
+  color: white; /* Texto branco */
+  text-decoration: none
+  
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+header {
+  width: 100vw; /* Cobre toda a largura */
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  position: relative; /* Contexto para elementos absolutos */
+  background-color: var(--bg-color);
+}
+
+#logo {
+  position: relative;
+  z-index: 1; /* Garante que a logo fique atrás da box */
+  text-align: center; /* Centraliza a logo */
+  margin: 0 auto;
+  max-width: 1000px;
+}
+#logo img {
+  max-width: 1200px; /* Tamanho grande da logo */
+  width: 100%;
+  height: auto;
+}
+
+#potencialize {
+  position: absolute;
+  top: 85%; /* Ajuste para posicionar logo abaixo da imagem */
+  left: 50%; /* Centraliza horizontalmente */
+  transform: translate(-50%, -50%); /* Corrige o alinhamento */
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  z-index: 10;
+}
+
+#potencialize p {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+#potencialize .btn {
+  display: inline-block;
+  background-color: #ffbf01;
+  color: Black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+#potencialize .btn:hover {
+  background-color: #ffd700;
+  color: #000;
+}
+
+.delete-button {
+  background-color: white;
+  border: 1px solid #dc3545; /* Borda vermelha */
+  color: #dc3545; /* Texto vermelho */
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+}
+
+/* Hover no botão de deletar */
+.delete-button:hover {
+  background-color: #dc3545; /* Fundo vermelho */
+  color: white; /* Texto branco */
+}
+
+.delete-button2 {
+  background-color: #fff9e6;
+  border: 1px solid #dc3545; /* Borda vermelha */
+  color: #dc3545; /* Texto vermelho */
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+}
+
+/* Hover no botão de deletar */
+.delete-button2:hover {
+  background-color: #dc3545; /* Fundo vermelho */
+  color: white; /* Texto branco */
+}
+
+
+.btn-delete {
+  background-color: white;
+  border:solid 1px;
+  border-color: #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #dc3545;
+}
+
+/* Link "Entrar" no canto superior direito */
+#entrar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#entrar a {
+  font-size: 1rem;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#entrar a:hover {
+  color: var(--secondary-color-light);
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Playfair Display', 'serif';
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px var(--color-shadow);
+}
+
+.feature-text {
+  flex: 1;
+}
+
+.feature-text h3 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.feature-text p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.feature-text ul {
+  list-style-type: disc; /* Ou outro estilo desejado */
+  padding-left: 20px;
+  margin: 0;
+}
+
+.feature-text ul li {
+  font-size: 1rem;
+  color: #000;
+}
+
+  header#cabecalho-principal {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1080px;
+    padding: 3rem 1rem;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  li a {
+    color: var(--secondary-color);
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    color: var(--secondary-color-light);
+    text-decoration: underline;
+  }
+  
+  body, #root {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  nav#navegacao-principal li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  main#conteiner-principal {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1080px;
+    padding: 1rem 1rem;
+    flex-grow: 1;
+    margin-bottom: 100px;
+  }
+  
+  footer#rodape-principal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1rem;
+  }
+/* Lista de cards */
+.lista-de-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Espaçamento entre os cards */
+  justify-content: flex-start; /* Alinha os cards à esquerda */
+  padding: 20px 0;
+}
+
+/* Estilo dos cards */
+.card {
+  background-color: #fffbea; /* Fundo amarelo leve */
+  border: 1px solid #ddd; /* Borda cinza clara */
+  border-radius: 10px; /* Bordas arredondadas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  overflow: hidden;
+  width: 280px; /* Largura fixa dos cards */
+  display: flex;
+  flex-direction: column; /* Conteúdo organizado verticalmente */
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card a {
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Herda a cor do elemento pai */
+  display: block; /* Torna o link clicável em toda a área do artigo */
+}
+
+
+.card-content p {
+  text-align: center; /* Centraliza o texto */
+  color: #333; /* Define uma cor padrão para o texto */
+}
+
+/* Efeito de hover nos cards */
+.card:hover {
+  transform: translateY(-5px); /* Eleva o card no hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+}
+
+/* Imagem do card */
+.card img {
+  width: 100%; /* Ocupa toda a largura */
+  height: 160px; /* Altura fixa */
+  object-fit: cover; /* Garante que a imagem não deforme */
+  border-bottom: 1px solid #ddd; /* Linha divisória */
+}
+
+/* Conteúdo do card */
+.card p {
+  margin: 10px 0;
+  padding: 0 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Título (idioma) */
+.card p strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+/* Nome do professor */
+.card p:nth-of-type(2) {
+  color: #ffa500;
+  font-weight: bold;
+}
+
+/* Linha para os botões de ação */
+.card .acoes {
+  display: flex;
+  justify-content: space-between; /* Botões distribuídos nos extremos */
+  padding: 10px;
+  margin-top: 10px;
+}
+
+/* Botão de editar */
+.card .acoes a.editar {
+  font-size: 0.9rem;
+  color: #d49f00;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #ffeebc;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card .acoes a.editar:hover {
+  background-color: #ffe7a0;
+  color: #d6a100;
+}
+
+/* Botão de apagar */
+.card .acoes a.apagar {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #dc3545;
+  text-decoration: none;
+  background-color: #fdecea;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card .acoes a.apagar:hover {
+  background-color: #f8d7da;
+  color: #b02a37;
+}
+
+.card .acoes {
+  display: flex;
+  justify-content: space-between; /* Botões distribuídos nos extremos */
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.card-image-wrapper {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  height: 160px; /* Altura fixa consistente */
+  background-color: #fffbea; /* Fundo para manter consistência */
+}
+
+/* Conteúdo do texto */
+.card-content {
+  padding: 10px;
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Botão de aceitar */
+.notificacoes .acoes a.aceitar {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #188025;
+  text-decoration: none;
+  background-color: #dfffe3;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.notificacoes .acoes a.aceitar:hover {
+  background-color: #ccffd3;
+  color: #007a10;
+}
+
+/* Botão de recusar */
+.notificacoes .acoes a.recusar {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #dc3545;
+  text-decoration: none;
+  background-color: #fdecea;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.notificacoes .acoes a.recusar:hover {
+  background-color: #f8d7da;
+  color: #b02a37;
+}
+  input {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    border: 1px solid var(--secondary-bg-color);
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  button {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+    color: var(--bg-color);
+    border-radius: 5px;
+    display: inline-block;
+    font-size: medium;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    padding: 1rem 2rem;
+  }
+  
+ 
+  
+
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid var(--secondary-bg-color);
+  border-radius: 10px;
+  background-color: var(--bg-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-break {
+  width: 100%; /* Ocupa toda a largura da página */
+  height: 5px; /* Espessura da linha */
+  background-color: #ffbf01; /* Cor amarela */
+  margin: 40px 0; /* Espaçamento acima e abaixo da linha */
+  border: none; /* Remove qualquer borda padrão */
+}
+
+.page-break2 {
+  width: 100%; /* Ocupa toda a largura da página */
+  height: 5px; /* Espessura da linha */
+  background-color: #ffbf01; /* Cor amarela */
+  margin: 20px 0; /* Espaçamento acima e abaixo da linha */
+  border: none; /* Remove qualquer borda padrão */
+}
+
+.login-form-container {
+    position: absolute;
+    top: 120%; /* Ajuste a posição vertical da box */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Garante que o centro do contêiner seja o ponto de referência */
+    z-index: 2; /* Garante que a box fique na frente da logo */
+    background-color: white; /* Fundo para a box */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+    width: 300px; /* Tamanho da box */
+}
+.login-form input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--secondary-bg-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #ffbf01;
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #ffd700;
+}
+
+.login-form p {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.login-form p a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-form p a:hover {
+  color: var(--secondary-color-light);
+  text-decoration: underline;
+}
+
+.signup-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid var(--secondary-bg-color);
+  border-radius: 10px;
+  background-color: var(--bg-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form-container {
+    position: absolute;
+    top: 150%; /* Ajuste a posição vertical da box */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Garante que o centro do contêiner seja o ponto de referência */
+    z-index: 2; /* Garante que a box fique na frente da logo */
+    background-color: white; /* Fundo para a box */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+    width: 300px; /* Tamanho da box */
+}
+.signup-form input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--secondary-bg-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.signup-form button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #ffbf01;
+  color: var(--bg-color);
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signup-form button:hover {
+  background-color: #ffd700;
+}
+
+.signup-form p {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.signup-form p a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-form p a:hover {
+  color: var(--secondary-color-light);
+  text-decoration: underline;
+}
+
+
+
+
+.nav-classe {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-classe a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.nav-classe a.active {
+  background-color: #FFBF0D;
+  color: #000;
+}
+
+
+
+/* Página de mensagem */
+.page-mensagem {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centraliza verticalmente */
+  min-height: calc(100vh - 500px); /* Ajusta para evitar espaço excessivo */
+  background-color: white;
+  margin: 0;
+  padding: 20px; /* Adiciona espaçamento ao redor */
+}
+
+/* Conteúdo principal */
+.page-mensagem .content {
+  background-color: #f3f3f3; /* Caixa com fundo claro */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Título */
+
+/* Estilo para as mensagens */
+.message-content img {
+  width: 50px; /* Define a largura fixa */
+  height: 50px; /* Define a altura fixa */
+  border-radius: 50%; /* Torna a imagem redonda */
+  object-fit: cover; /* Garante que a imagem seja ajustada ao tamanho sem distorção */
+  margin-bottom: 10px; /* Adiciona espaçamento entre a imagem e o texto */
+  border: 2px solid #ddd; /* Adiciona uma borda suave */
+}
+
+.page-mensagem h2 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #333;
+}
+
+/* Botão "Voltar" */
+.page-mensagem .voltar {
+  margin-top: 10px; /* Reduz o espaço */
+}
+
+.page-mensagem .voltar .botaozinho {
+  display: inline-block;
+  background-color: #ffbf01;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.page-mensagem .voltar .botaozinho:hover {
+  background-color: #ffd700;
+}
+
+/* Formulário */
+.page-mensagem form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.page-mensagem form textarea,
+.page-mensagem form select,
+.page-mensagem form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff; /* Fundo branco para os inputs */
+  color: #333;
+}
+
+.page-mensagem form textarea:focus,
+.page-mensagem form select:focus,
+.page-mensagem form input:focus {
+  border-color: #ffbf01;
+  outline: none;
+}
+
+/* Botão de enviar */
+.page-mensagem form button {
+  background-color: #ffbf01;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-mensagem form button:hover {
+  background-color: #ffd700;
+}
+
+
+
+/* Escopo para a página de atividades */
+.atividades-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* Navegação */
+
+/* Estilo das atividades */
+.atividades-page figure {
+  display: flex;
+  align-items: center;
+  background-color: #fff9e6; /* Amarelo claro */
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ffe4a1; /* Contorno sutil */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.atividades-page figure img {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+.atividades-page figure blockquote {
+  font-size: 1em;
+  margin: 0;
+  color: #333;
+  flex-grow: 1;
+}
+
+.atividades-page figure figcaption {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.atividades-page figure a {
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+/* Botão de apagar atividade */
+.atividades-page .delete-activity {
+  text-align: center;
+}
+
+.atividades-page .delete-activity a {
+  color: red;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+
+/* Botão de baixar */
+.atividades-page figure a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 10px 15px;
+  background-color: #ffbf01; /* Azul do botão */
+  color: black; /* Cor do texto */
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.atividades-page figure a.btn:hover {
+  background-color: #ffd700; /* Azul mais escuro no hover */
+  text-decoration: none; /* Sem sublinhado no hover */
+}
+
+/* Ícone no botão */
+.atividades-page figure a.btn img {
+  margin-right: 8px; /* Espaço entre ícone e texto */
+}
+
+
+/* Escopo para a página de atividades */
+.page-atividade {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white; /* Fundo branco para a página */
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Conteúdo principal */
+.page-atividade .content {
+  background-color: #f3f3f3; /* Fundo claro */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Título */
+.page-atividade h2 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #333;
+}
+
+/* Formulário */
+.page-atividade form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.page-atividade form textarea,
+.page-atividade form select,
+.page-atividade form input[type="text"],
+.page-atividade form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+}
+
+.page-atividade form input[type="file"] {
+  padding: 5px; /* Ajuste para input de arquivos */
+}
+
+.page-atividade form textarea:focus,
+.page-atividade form select:focus,
+.page-atividade form input:focus {
+  border-color: #ffbf01;
+  outline: none;
+}
+
+.page-atividade form button {
+  background-color: #ffbf01;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-atividade form button:hover {
+  background-color: #ffd700
+}
+
+/* Escopo para a página de atividades */
+.page-atividade {
+  display: block; /* Alinhamento natural para evitar deslocamento desnecessário */
+  margin: 20px auto; /* Centraliza horizontalmente e adiciona margem no topo */
+  padding: 20px; /* Adiciona espaçamento interno */
+  background-color: white; /* Fundo branco para a página */
+}
+
+/* Conteúdo principal */
+.page-atividade .content {
+  background-color: #f3f3f3; /* Fundo claro */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+}
+
+
+.flashcards-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* Navegação */
+
+/* Estilo das mensagens */
+.flashcards-page .message {
+  display: flex;
+  align-items: flex-start;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.flashcards-page .message img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.flashcards-page .message-content {
+  flex-grow: 1;
+}
+
+.flashcards-page .message-content h4 {
+  font-size: 1em;
+  margin: 0 0 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.flashcards-page .message-content p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.flashcards-page .message-content .message-divider {
+  margin: 10px 0;
+  border-top: 2px solid #ffc107;
+}
+
+/* Botão para apagar mensagem */
+.flashcards-page .message-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.flashcards-page .message-action a {
+  color: #dc3545;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.flashcards-page .message-action a:hover {
+  text-decoration: underline;
+}
+
+.deck-page .deck-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.deck-page .card-display {
+  margin: 20px auto;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.deck-page .card-display .card {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.deck-page .card-display2 {
+  margin: 20px auto;
+  width: 300px;
+  height: 200px; /* Permite ajustar a altura dinamicamente */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Organiza elementos verticalmente */
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px; /* Adiciona espaçamento interno */
+}
+
+.deck-page .card-display2 .card {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px; /* Espaçamento entre o card e o texto abaixo */
+}
+
+.deck-page .card-display2 .card-orientation {
+  font-size: 13px;
+  color: #555; /* Cor do texto para contraste */
+  margin-top: 10px; /* Espaçamento acima do texto */
+}
+
+.deck-page .card-hint {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #777;
+}
+
+.deck-page .controls {
+  margin-top: 20px;
+}
+
+.deck-page .controls .control-btn {
+  margin: 0 10px;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffbf01;
+  color: black;
+  cursor: pointer;
+}
+
+.deck-page .controls .control-btn:hover {
+  background-color: #ffd700;
+}
+
+.deck-page .actions {
+  margin-top: 20px; /* Espaçamento superior */
+  display: flex; /* Define um layout flexível */
+  justify-content: center; /* Centraliza os botões horizontalmente */
+  gap: 10px; /* Espaçamento uniforme entre os botões */
+}
+
+.deck-page .actions .action-btn {
+  margin: 0; /* Remove qualquer margem adicional */
+  padding: 10px; /* Mantém o tamanho do botão */
+  border-radius: 50%; /* Botões circulares */
+  border: none;
+  background-color: #ffbf01;
+  color: black;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.deck-page .actions .action-btn:hover {
+  background-color: #ffd700;
+}
+
+.deck-page .add-card-btn {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  background-color: #ffbf01;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.deck-page .add-card-btn:hover {
+  background-color: #ffd700;
+}
+
+/* Mural mensagens */
+/* Geral */
+.mural-page {
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+  padding: 20px;
+}
+/* Navbar Geral */
+.nav-classe {
+  display: flex;
+  padding-bottom: 10px;
+  justify-content: center;
+  gap: 20px; /* Espaço entre os itens */
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif; /* Substitua pela fonte que você deseja */
+}
+
+/* Links da Navbar */
+.nav-classe a {
+  font-size: 28px; /* Aumenta o tamanho da fonte */
+  color: #444;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Hover no link */
+.nav-classe a:hover {
+  color: #444;
+  background-color: #fff1b5;
+  border-bottom: 3px solid #ffbf01;
+  border-radius: 5px; /* Adiciona uma borda arredondada para o hover */
+}
+
+.link-cadastro {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffbf0d; /* Laranja para combinar com o design do site */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.link-cadastro:hover {
+  color: #ffa600; /* Um tom mais escuro no hover */
+  transform: scale(1.05); /* Leve aumento no tamanho */
+  text-decoration: underline;
+}
+
+/* Link ativo */
+.nav-classe a.active {
+  color: black;
+  background-color: #ffbf01;
+  border-bottom: 3px solid #ffbf01;
+  font-weight: bold;
+  padding-bottom: 12px;
+}
+
+.nav-classe a.active:hover {
+  background-color: #ffd700;
+}
+
+/* Botão de criar mensagem */
+
+
+.botaozao:hover {
+  background-color: #ffd700;
+}
+
+/* Lista de mensagens */
+.mural-page .message-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Estilo das mensagens */
+.mural-page .message {
+  padding: 20px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+/* Avatar e conteúdo */
+.mural-page .message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  flex-direction: column; /* Alinha o texto abaixo do avatar e do nome */
+}
+
+/* Avatar */
+.mural-page .message-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-bottom: 10px; /* Espaço entre o avatar e o nome */
+}
+
+/* Nome do usuário */
+.mural-page .message-content h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Texto da mensagem */
+.mural-page .message-content p {
+  margin: 10px 0 0;
+  font-size: 18px; /* Tamanho maior para destaque */
+  font-weight: normal; /* Negrito para maior destaque */
+  color: #222; /* Cor mais escura */
+}
+
+/* Data */
+.mural-page .message-content small {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+/* Botões de ação */
+.mural-page .message-action {
+  position: absolute;
+  top: 20px; /* Alinha no topo da mensagem */
+  right: 15px; /* Alinha à direita */
+  display: flex;
+  gap: 10px;
+}
+
+.mural-page .message-action a {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.mural-page .btn {
+  background-color: #ffbf01;
+}
+
+.mural-page .btn:hover {
+  background-color: #ffd700;
+}
+
+
+/* Estilo das respostas */
+.mural-page .response-list {
+  list-style: none;
+  padding-left: 20px;
+  border-left: 4px solid #ddd;
+  margin-top: 15px;
+}
+
+.mural-page .response-list .message {
+  background-color: #f9f9f9;
+  border-left: 4px solid #ffbf01;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+/* Mensagem vazia */
+.mural-page .mural-empty {
+  color: #777;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.homepage .features {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.homepage .feature {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.homepage .feature:nth-child(even) {
+  flex-direction: row-reverse; /* Alterna o lado da imagem */
+}
+
+.homepage .feature img {
+  flex: 1;
+  width: 100%; /* Garante que a imagem ocupe a largura do contêiner */
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.homepage .feature-text {
+  flex: 2;
+  text-align: left;
+}
+
+.homepage .feature-text h3 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.homepage .feature-text p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.homepage .feature-text ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.homepage .feature-text ul li {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Escopo para a página de lista de alunos */
+.lista-alunos-page {
+  margin-top: 20px;
+}
+
+.lista-alunos-page h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Barra de Pesquisa */
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.search-form .btn-primary {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Lista de Alunos */
+.student-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.student-item {
+  display: flex;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.student-picture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.student-info {
+  flex: 1;
+}
+
+.student-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.student-classes {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.class-item {
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.no-students {
+  font-size: 1rem;
+  color: #888;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Botão de Voltar */
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Footer principal */
+.site-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Footer principal */
+.site-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+  width: 70%; /* Garante que ocupe a largura do body */
+  max-width: 1200px; /* Limita a largura máxima */
+  margin: 0 auto; /* Centraliza o footer no body */
+  box-sizing: border-box;
+}
+
+/* Conteúdo do footer */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Seções do footer */
+.footer-section {
+  flex: 1 1 300px;
+  margin: 10px;
+}
+
+/* Títulos das seções */
+.footer-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ffa500;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* Texto sobre */
+.footer-section.about p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Links rápidos */
+.footer-section.links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section.links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section.links ul li a {
+  color: #ffa500;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-section.links ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Redes sociais */
+.footer-section.social .social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.footer-section.social .icon {
+  color: #ffa500;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid #ffa500;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.footer-section.social .icon:hover {
+  background-color: #ffa500;
+  color: #333;
+}
+
+/* Rodapé inferior */
+.footer-bottom {
+  text-align: center;
+  font-size: 0.8rem;
+  background-color: #222;
+  padding: 10px;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: #bbb;
+}/* Footer principal */
+.site-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+  width: 100%; /* Garante que ocupe toda a largura */
+  box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+  position: relative;
+  bottom: 0; /* Garante que fique na parte inferior */
+}
+
+/* Conteúdo do footer */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px; /* Limita a largura do conteúdo interno */
+  margin: 0 auto; /* Centraliza o conteúdo */
+  padding: 20px;
+}
+
+/* Seções do footer */
+.footer-section {
+  flex: 1 1 300px;
+  margin: 10px;
+}
+
+/* Títulos das seções */
+.footer-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ffa500;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* Texto sobre */
+.footer-section.about p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Links rápidos */
+.footer-section.links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section.links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section.links ul li a {
+  color: #ffa500;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-section.links ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Redes sociais */
+.footer-section.social .social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.footer-section.social .icon {
+  color: #ffa500;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid #ffa500;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.footer-section.social .icon:hover {
+  background-color: #ffa500;
+  color: #333;
+}
+
+/* Rodapé inferior */
+.footer-bottom {
+  text-align: center;
+  font-size: 0.8rem;
+  background-color: #222;
+  padding: 10px;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: #bbb;
+}
+
+
+/* Página do Perfil */
+.profile-page {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Centraliza o conteúdo */
+}
+
+/* Centralização do Cabeçalho */
+.profile-info {
+  display: flex;
+  flex-direction: column; /* Organiza imagem e texto verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  margin-bottom: 30px;
+}
+
+/* Imagem do Perfil */
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  object-fit: cover;
+  margin-bottom: 15px; /* Espaço entre a imagem e o texto */
+}
+
+/* Título "Bem-vindo" */
+.profile-info h2 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* Layout do Conteúdo */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+/* Informações pessoais e estatísticas */
+.personal-info,
+.stats {
+  flex: 1;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 48%; /* Dividido igualmente em telas maiores */
+  box-sizing: border-box;
+}
+
+.personal-info h2,
+.stats h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #444;
+  text-align: center;
+}
+
+.personal-info p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Botão */
+.btn-primary {
+  display: block;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #333333;
+}
+
+/* Estatísticas */
+.stats .stat-item {
+  margin-bottom: 15px;
+}
+
+.stats .stat-item:last-child {
+  margin-bottom: 0;
+}
+
+.stats .stat-item h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.stats .stat-item p {
+  font-size: 14px;
+  color: #555;
+}
+
+.btn-link {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: #0056b3;
+}
+
+/* Botão de Logout */
+.logout-btn {
+  display: block;
+  margin: 30px auto;
+  width: 200px;
+  padding: 10px;
+  background-color: #ffbf01;
+  color: black;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #ffd700;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .personal-info,
+  .stats {
+    max-width: 100%;
+  }
+}
+
+
+/* Estilos principais para páginas de formulário */
+.page-form {
+  max-width: 600px;
+  margin: 30px auto; /* Centraliza o formulário */
+  padding: 20px;
+  background-color: #f9f9f9; /* Fundo claro */
+  border: 1px solid #ddd; /* Borda sutil */
+  border-radius: 10px; /* Arredondamento */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.page-form h2 {
+  text-align: center;
+  color: #333; /* Texto em cinza escuro */
+  margin-bottom: 20px;
+}
+
+.page-form hr {
+  border: none;
+  border-top: 2px solid #ffbf01; /* Linha estilizada */
+  margin: 20px 0;
+}
+
+/* Estilos para campos do formulário */
+.page-form form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.page-form form input,
+.page-form form select,
+.page-form form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Garante alinhamento */
+  font-size: 14px;
+}
+
+.page-form form input:focus,
+.page-form form select:focus,
+.page-form form textarea:focus {
+  border-color: #ffbf01; /* Cor de foco */
+  outline: none; /* Remove o contorno padrão */
+}
+
+.hints-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.hint-btn {
+  background-color:#ffbf0d ;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+
+.hint-btn:hover {
+  background-color:#ddd ;
+  transform: scale(1.1);
+}
+
+.hint-text {
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.deck-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Container dos cards */
+.cards-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Lista de cards */
+.cards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Item de card */
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Último card sem borda */
+.card-item:last-child {
+  border-bottom: none;
+}
+
+/* Link do card */
+.card-link {
+  font-size: 16px;
+  color: #ffbf0d;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.card-link:hover {
+  color: #ff9f00;
+}
+
+/* Botões de ação */
+.card-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button {
+  padding: 5px 10px;
+  background-color: #ffbf01;
+  border: none;
+  border-radius: 4px;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #ffd700;
+  text-decoration: none;
+  color: black;
+}
+
+.delete-button3 {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #f44336;
+  border-radius: 4px;
+  color: #f44336;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.delete-button3:hover {
+  background-color: #d32f2f;
+  text-decoration: none;
+  color: white;
+}

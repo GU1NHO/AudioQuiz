@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-form">
+    <h2>Atualizar Perfil</h2>
+    <hr Class="page-break">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="botaozinho">Salvar Alterações</button>
+    <a href="{% url 'accounts:profile' %}" Class = "botaozinho">Voltar</a>
+</form>
+    
+</div>
+{% endblock content %}

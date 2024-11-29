@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}{% endblock %} AudioQuiz
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" /> <!-- adicione esta linha -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="icon" href="{% static 'loguinho.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'loguinho.png' %}" type="image/x-icon">
+    
+</head>
+
+<body>
+    <header id="cabecalho-principal">
+        <a href="{% url 'classes:index' %}"><img src="{% static 'AudioQuiz.svg' %}" width="250" height="auto"></a>
+        <nav id="navegacao-principal">
+            <ul>
+                <li><a href="{% url 'classes:index' %}"><img src="{% static 'Home.svg' %}" width="40" height="auto"></a></li>
+                <li><a href="{% url 'accounts:profile' %}"><img src="{% static 'perfil.svg' %}" width="40" height="auto"></a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <main id="conteiner-principal">
+        {% block content %}
+        {% endblock content %}
+    </main>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-section about">
+          <h3>Sobre Nós</h3>
+          <p>
+            Somos uma plataforma dedicada ao aprendizado interativo, ajudando você a atingir seus objetivos educacionais com eficiência e praticidade.
+          </p>
+        </div>
+        <div class="footer-section links">
+          <h3>Links Rápidos</h3>
+          <ul>
+            <li><a href="{% url 'index' %}">Início</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+        <div class="footer-section social">
+          <h3>Redes Sociais</h3>
+          <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" class="icon">Facebook</a>
+            <a href="https://x.com" target="_blank" class="icon">Twitter</a>
+            <a href="https://instagram.com" target="_blank" class="icon">Instagram</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 AudioQuiz. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+</body>
+</html>

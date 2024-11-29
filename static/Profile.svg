@@ -1,0 +1,10 @@
+/* Generic avatar */
+
+position: absolute;
+width: 180px;
+height: 180px;
+left: 611px;
+top: 92px;
+
+background: #EADDFF;
+border-radius: 100px;

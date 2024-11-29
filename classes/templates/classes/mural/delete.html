@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<form action="{% url 'classes:delete_message' Classe.id mensagem.id %}" method="post">
+    {% csrf_token %}
+    <h2>
+      Você tem certeza que deseja apagar sua mensagem?
+    </h2>
+    <br>
+    <button type="submit" class = "delete-button">Apagar</button>
+    <a href = "{%url 'classes:mural' Classe.id%}" class = "botaozinho">Voltar</a>
+  </form>
+  <br>
+  
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

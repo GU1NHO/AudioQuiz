@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="page-mensagem">
+    <div class="content">
+        <h3>Escreva sua mensagem</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label for="conteudo">Conteúdo:</label>
+            {{ form.conteudo }}
+            
+            <button type="submit">Postar Mensagem</button>
+        </form>
+        <p class="voltar">
+            <a href="{% url 'classes:atividades_index' Classe.id %}" class="botaozinho">Voltar</a>
+        </p>
+    </div>
+</div>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

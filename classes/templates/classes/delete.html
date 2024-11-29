@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<form action="{% url 'classes:delete' classe.id %}" method="post">
+  {% csrf_token %}
+  <h2>
+    Você tem certeza que deseja apagar a classe: {{ classe.turma }}?
+  </h2>
+  <br>
+  <button type="submit" class = "delete-button">Apagar</button>
+  <a href="{% url 'classes:index'%}" class = "botaozinho">Voltar</a>
+</form>
+
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="deck-page">
+  <div class="deck-container">
+    <h1>{{ deck.nome }}</h1> <!-- Nome do deck ao qual o card pertence -->
+    <br>
+    <div class="hints-container" id="hints-container" style="display: flex; gap: 10px; align-items: center;">
+      <!-- Dicas aparecem como botões acima do cartão -->
+      {% if card.dica_1 %}
+        <button class="hint-btn" onclick="revealHint(this, '{{ card.dica_1 }}')">Dica 1</button>
+      {% endif %}
+      {% if card.dica_2 %}
+        <button class="hint-btn" onclick="revealHint(this, '{{ card.dica_2 }}')">Dica 2</button>
+      {% endif %}
+      {% if card.dica_3 %}
+        <button class="hint-btn" onclick="revealHint(this, '{{ card.dica_3 }}')">Dica 3</button>
+      {% endif %}
+    </div>
+    <div class="card-display2">
+      <div id="card" class="card" onclick="flipCard()">
+        <div class="card-content">
+          <p id="card-content">{{ card.lado_frente }}</p> <!-- Frente do card -->
+      </div>
+      </div>
+      <p class="card-orientation">Clique para revelar a resposta</p>
+    </div>
+    
+    <div id="transcription-output"></div>
+    <div class="controls">
+      {% if prev_card %}
+      <a href="{% url 'classes:cards' deck.id prev_card.id %}" class="action-btn" style="background-color:#ffbf0d ; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none;" onmouseover="this.style.backgroundColor='#FFD700'"; this.style.color="#f1f1f1"; onmouseout="this.style.backgroundColor='#ffbf0d'">←</a>
+      {% endif %}
+    </div>
+    <div class="actions">
+      <form method="post" action="{% url 'classes:naomaduroeproximo' deck.id card.id %}">
+        {% csrf_token %}
+        <button type="submit" class="action-btn" style="background-color: #f4463d; color: white;"; onmouseover="this.style.backgroundColor='#b83a31'"; this.style.color="#f1f1f1"; onmouseout="this.style.backgroundColor='#f4463d'">✘</button>
+      </form>
+      <button id="record-btn" class="action-btn">🎤</button>
+        <form method="post" action="{% url 'classes:maduroeproximo' deck.id card.id %}">
+          {% csrf_token %}
+        <button type="submit" class="action-btn" style="background-color: #57AC78; color: white;"; onmouseover="this.style.backgroundColor='#46875c'"; this.style.color="#f1f1f1"; onmouseout="this.style.backgroundColor='#57AC78'">✔</button>
+       </form>
+    </div>
+  </div>
+  <div id="transcription-output"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/1.0.0/recorder.min.js"></script>
+
+<script>
+  let isFront = true;
+  let isHintVisible = false;
+
+  function flipCard() {
+    const cardContent = document.getElementById("card-content");
+    if (isFront) {
+      cardContent.textContent = "{{ card.lado_tras }}"; // Verso do card
+    } else {
+      cardContent.textContent = "{{ card.lado_frente }}"; // Frente do card
+    }
+    isFront = !isFront;
+  }
+
+
+  function revealHint(button, hintText) {
+    // Remove o botão e substitui pelo texto da dica
+    const hintContainer = button.parentNode;
+    const hintTextElement = document.createElement("span");
+    hintTextElement.textContent = hintText;
+    hintTextElement.classList.add("hint-text");
+    hintContainer.replaceChild(hintTextElement, button);
+  }
+
+  let mediaRecorder
+  let audioChunks = [];
+
+  document.getElementById('record-btn').addEventListener('click', async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("Seu navegador não suporta gravação de áudio.");
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+
+      mediaRecorder.ondataavailable = (event) => {
+        audioChunks.push(event.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        sendAudioToServer(audioBlob);
+        audioChunks = [];
+        document.getElementById('record-btn').disabled = false; // Reabilita o botão
+      };
+
+      document.getElementById('record-btn').disabled = true; // Desabilita enquanto grava
+      mediaRecorder.start();
+      document.getElementById('record-btn').textContent = '🔴 Gravando...';
+
+      setTimeout(() => {
+        mediaRecorder.stop();
+        document.getElementById('record-btn').textContent = '🎤';
+      }, 3000); // Grava por 3 segundos
+    } catch (error) {
+      console.error('Erro ao acessar o microfone:', error);
+    }
+  });
+
+  async function sendAudioToServer(audioBlob) {
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'audio.webm');
+
+    try {
+        const response = await fetch('/classes/api/transcribe_audio/', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        const transcriptionOutput = document.getElementById('transcription-output');
+        const correctAnswer = "{{ card.lado_tras|escapejs }}".toLowerCase().trim();
+
+        if (result.success) {
+            if (result.transcription.toLowerCase().trim() === correctAnswer) {
+                transcriptionOutput.textContent = "CORRETO!";
+                setTimeout(async () => {
+                    // Requisição para marcar como maduro
+                    const redirectResponse = await fetch("{% url 'classes:maduroeproximo' deck.id card.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                    });
+
+                    const redirectData = await redirectResponse.json();
+                    if (redirectData.success) {
+                        window.location.href = redirectData.redirect_url; // Redireciona para a URL retornada
+                    } else {
+                        transcriptionOutput.textContent = `Erro ao redirecionar: ${redirectData.error}`;
+                    }
+                }, 1000);
+            } else {
+                transcriptionOutput.textContent = "TENTE NOVAMENTE!";
+                setTimeout(async () => {
+                    // Requisição para desmarcar
+                    const redirectResponse = await fetch("{% url 'classes:cards' deck.id card.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                    });
+
+                    const redirectData = await redirectResponse.json();
+                    if (redirectData.success) {
+                        window.location.href = redirectData.redirect_url; // Redireciona para a URL retornada
+                    } else {
+                        transcriptionOutput.textContent = `Erro ao redirecionar: ${redirectData.error}`;
+                    }
+                }, 1000);
+            }
+        } else {
+            transcriptionOutput.textContent = `Erro: ${result.error}`;
+        }
+    } catch (error) {
+        transcriptionOutput.textContent = `Erro ao enviar áudio: ${error.message}`;
+    }
+}
+</script>
+<a href="{% url 'classes:flashcards' deck.classe.id %}" class="botaozinho">Voltar</a>
+{% endblock content %}

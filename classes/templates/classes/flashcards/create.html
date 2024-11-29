@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+{% if user.is_authenticated %}
+<div Class="page-form">
+<h2>Novo Baralho</h2>
+<hr class = "page-break">
+<form method="POST" action="{% url 'classes:create_flashcards' Classe.id %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="botaozinho">Criar</button>
+  <a href="{% url 'classes:flashcards' Classe.id %}" Class = "botaozinho">Voltar</a>
+</form>
+</div>
+{% else %}
+  <p>Você não está logado.</p>
+  <br>
+  <a href="{% url 'accounts:login' %}" class="botaozinho">Faça login aqui</a>
+{% endif %}
+{% endblock content %}
