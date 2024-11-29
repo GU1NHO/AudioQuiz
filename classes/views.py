@@ -31,6 +31,17 @@ import speech_recognition as sr
 from django.views.decorators.csrf import csrf_exempt
 from pydub import AudioSegment
 from pydub.utils import which
+import logging
+import os
+import sounddevice as sd
+import numpy as np
+import wave
+import logging
+from pydub import AudioSegment
+import speech_recognition as sr
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 class ClasseListView(ListView):
     model = Classe
@@ -518,34 +529,43 @@ class CardUpdateView(UpdateView):
         # Redireciona de volta para o mural da classe
         return reverse_lazy('classes:cards_in_deck', kwargs={'deck_id': self.kwargs['deck_id']})
 
+logger = logging.getLogger(__name__)
+
+# Função para capturar áudio com sounddevice
+def record_audio(duration=3, fs=44100):
+    # duration em segundos, fs = frequência de amostragem (44.1kHz padrão para áudio)
+    logger.info("Iniciando gravação com sounddevice...")
+    audio_data = sd.rec(int(duration * fs), samplerate=fs, channels=1, dtype='int16')
+    sd.wait()  # Espera até que a gravação termine
+    return audio_data, fs
+
 @csrf_exempt
 def transcribe_audio(request):
     if request.method == 'POST':
         try:
-            audio_file = request.FILES['audio']
-            webm_path = os.path.join(settings.MEDIA_ROOT, 'classes', audio_file.name)
-            os.makedirs(os.path.dirname(webm_path), exist_ok=True)
+            # Gravar o áudio usando sounddevice
+            audio_data, fs = record_audio(duration=3)  # Grava por 3 segundos
+            wav_path = os.path.join(settings.MEDIA_ROOT, 'classes', 'temp_audio.wav')
             
-            # Salvar o arquivo .webm
-            with open(webm_path, 'wb') as f:
-                for chunk in audio_file.chunks():
-                    f.write(chunk)
-
-            # Reprocessar como WAV
-            wav_path = webm_path.replace('.webm', '.wav')
-            with open(wav_path, 'wb') as wav_file:
-                audio = AudioSegment.from_file(webm_path, format="webm")
-                audio.export(wav_file, format="wav")
-
-            # Reconhecer o áudio usando SpeechRecognition
+            # Salvar como arquivo WAV
+            with wave.open(wav_path, 'wb') as wav_file:
+                wav_file.setnchannels(1)
+                wav_file.setsampwidth(2)  # 16-bit
+                wav_file.setframerate(fs)
+                wav_file.writeframes(audio_data.tobytes())
+            
+            logger.info(f"Áudio gravado e salvo como: {wav_path}")
+            
+            # Reconhecimento de fala
             r = sr.Recognizer()
             with sr.AudioFile(wav_path) as source:
                 audio_data = r.record(source)
                 transcribed_text = r.recognize_google(audio_data, language="pt-BR")
-
+            
             return JsonResponse({'success': True, 'transcription': transcribed_text})
 
         except Exception as e:
+            logger.error(f"Erro ao processar áudio: {str(e)}")
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
     return JsonResponse({'success': False, 'message': 'Método inválido!'}, status=400)

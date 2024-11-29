@@ -62,7 +62,6 @@
     isFront = !isFront;
   }
 
-
   function revealHint(button, hintText) {
     // Remove o botão e substitui pelo texto da dica
     const hintContainer = button.parentNode;
@@ -72,104 +71,81 @@
     hintContainer.replaceChild(hintTextElement, button);
   }
 
-  let mediaRecorder
-  let audioChunks = [];
-
   document.getElementById('record-btn').addEventListener('click', async () => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert("Seu navegador não suporta gravação de áudio.");
-      return;
-    }
-
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-
-      mediaRecorder.ondataavailable = (event) => {
-        audioChunks.push(event.data);
-      };
-
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        sendAudioToServer(audioBlob);
-        audioChunks = [];
-        document.getElementById('record-btn').disabled = false; // Reabilita o botão
-      };
-
-      document.getElementById('record-btn').disabled = true; // Desabilita enquanto grava
-      mediaRecorder.start();
+      // Desabilitar o botão para evitar múltiplas requisições
+      document.getElementById('record-btn').disabled = true; 
       document.getElementById('record-btn').textContent = '🔴 Gravando...';
 
-      setTimeout(() => {
-        mediaRecorder.stop();
-        document.getElementById('record-btn').textContent = '🎤';
-      }, 3000); // Grava por 3 segundos
-    } catch (error) {
-      console.error('Erro ao acessar o microfone:', error);
-    }
-  });
-
-  async function sendAudioToServer(audioBlob) {
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'audio.webm');
-
-    try {
-        const response = await fetch('/classes/api/transcribe_audio/', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const result = await response.json();
-        const transcriptionOutput = document.getElementById('transcription-output');
-        const correctAnswer = "{{ card.lado_tras|escapejs }}".toLowerCase().trim();
-
-        if (result.success) {
-            if (result.transcription.toLowerCase().trim() === correctAnswer) {
-                transcriptionOutput.textContent = "CORRETO!";
-                setTimeout(async () => {
-                    // Requisição para marcar como maduro
-                    const redirectResponse = await fetch("{% url 'classes:maduroeproximo' deck.id card.id %}", {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}',
-                            'X-Requested-With': 'XMLHttpRequest',
-                        },
-                    });
-
-                    const redirectData = await redirectResponse.json();
-                    if (redirectData.success) {
-                        window.location.href = redirectData.redirect_url; // Redireciona para a URL retornada
-                    } else {
-                        transcriptionOutput.textContent = `Erro ao redirecionar: ${redirectData.error}`;
-                    }
-                }, 1000);
-            } else {
-                transcriptionOutput.textContent = "TENTE NOVAMENTE!";
-                setTimeout(async () => {
-                    // Requisição para desmarcar
-                    const redirectResponse = await fetch("{% url 'classes:cards' deck.id card.id %}", {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}',
-                            'X-Requested-With': 'XMLHttpRequest',
-                        },
-                    });
-
-                    const redirectData = await redirectResponse.json();
-                    if (redirectData.success) {
-                        window.location.href = redirectData.redirect_url; // Redireciona para a URL retornada
-                    } else {
-                        transcriptionOutput.textContent = `Erro ao redirecionar: ${redirectData.error}`;
-                    }
-                }, 1000);
-            }
-        } else {
-            transcriptionOutput.textContent = `Erro: ${result.error}`;
+      // Enviar uma requisição para o servidor para gravar e transcrever
+      const response = await fetch('/classes/api/transcribe_audio/', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'X-Requested-With': 'XMLHttpRequest'
         }
+      });
+
+      const result = await response.json();
+      const transcriptionOutput = document.getElementById('transcription-output');
+      const correctAnswer = "{{ card.lado_tras|escapejs }}".toLowerCase().trim();
+
+      if (result.success) {
+        transcriptionOutput.textContent = result.transcription;
+
+        // Comparação entre a transcrição e a resposta correta
+        if (result.transcription.toLowerCase().trim() === correctAnswer) {
+          transcriptionOutput.textContent = "CORRETO!";
+          setTimeout(async () => {
+            // Requisição para marcar como maduro
+            const redirectResponse = await fetch("{% url 'classes:maduroeproximo' deck.id card.id %}", {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest',
+              },
+            });
+
+            const redirectData = await redirectResponse.json();
+            if (redirectData.success) {
+              window.location.href = redirectData.redirect_url; // Redireciona para a URL retornada
+            } else {
+              transcriptionOutput.textContent = `Erro ao redirecionar: ${redirectData.error}`;
+            }
+          }, 1000);
+        } else {
+          transcriptionOutput.textContent = "TENTE NOVAMENTE!";
+          setTimeout(async () => {
+            // Requisição para desmarcar o card
+            const redirectResponse = await fetch("{% url 'classes:cards' deck.id card.id %}", {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest',
+              },
+            });
+
+            const redirectData = await redirectResponse.json();
+            if (redirectData.success) {
+              window.location.href = redirectData.redirect_url; // Redireciona para a URL retornada
+            } else {
+              transcriptionOutput.textContent = `Erro ao redirecionar: ${redirectData.error}`;
+            }
+          }, 1000);
+        }
+      } else {
+        transcriptionOutput.textContent = `Erro: ${result.error}`;
+      }
     } catch (error) {
-        transcriptionOutput.textContent = `Erro ao enviar áudio: ${error.message}`;
+      console.error('Erro ao enviar áudio:', error);
+      document.getElementById('transcription-output').textContent = `Erro ao processar áudio: ${error.message}`;
     }
-}
+
+    // Reabilitar o botão após a requisição
+    document.getElementById('record-btn').disabled = false; 
+    document.getElementById('record-btn').textContent = '🎤';
+  });
 </script>
+
 <a href="{% url 'classes:flashcards' deck.classe.id %}" class="botaozinho">Voltar</a>
 {% endblock content %}
