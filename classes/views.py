@@ -569,7 +569,7 @@ def transcribe_audio(request):
             # Converter o arquivo .webm para .wav usando FFmpeg
             try:
                 subprocess.run(
-                    ['ffmpeg', '-i', webm_path, '-ar', '16000', '-ac', '1', wav_path],
+                    ['ffmpeg', '-y', '-i', webm_path, '-ar', '16000', '-ac', '1', wav_path],
                     check=True
                 )
                 logger.info(f"Conversão para .wav concluída: {wav_path}")
@@ -584,10 +584,28 @@ def transcribe_audio(request):
                 transcribed_text = r.recognize_google(audio_data, language="pt-BR")
             
             logger.info(f"Transcrição concluída: {transcribed_text}")
+
+            # Remover os arquivos após o processamento
+            if os.path.exists(webm_path):
+                os.remove(webm_path)
+                logger.info(f"Arquivo {webm_path} removido.")
+            if os.path.exists(wav_path):
+                os.remove(wav_path)
+                logger.info(f"Arquivo {wav_path} removido.")
+            
             return JsonResponse({'success': True, 'transcription': transcribed_text})
 
         except Exception as e:
             logger.error(f"Erro ao processar áudio: {str(e)}")
+
+            # Remover arquivos em caso de erro
+            if os.path.exists(webm_path):
+                os.remove(webm_path)
+                logger.info(f"Arquivo {webm_path} removido.")
+            if os.path.exists(wav_path):
+                os.remove(wav_path)
+                logger.info(f"Arquivo {wav_path} removido.")
+            
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
     return JsonResponse({'success': False, 'message': 'Método inválido!'}, status=400)
