@@ -12,10 +12,14 @@ RUN apt-get update && apt-get install -y \
     portaudio19-dev \
     python3-all-dev \
     libsndfile1 \
+    alsa-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # Instale as dependências do Python
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Adiciona o usuário ao grupo de áudio
+RUN usermod -a -G audio root
 
 # Copie o código da aplicação para dentro do container
 COPY . .
@@ -39,6 +43,8 @@ User = get_user_model()
 User.objects.filter(username=os.environ["DJANGO_SUPERUSER_USERNAME"]).exists() or \
     User.objects.create_superuser(os.environ["DJANGO_SUPERUSER_USERNAME"], os.environ["DJANGO_SUPERUSER_EMAIL"], os.environ["DJANGO_SUPERUSER_PASSWORD"])
 EOF
+
+EXPOSE 8000
 
 # Substitua o CMD para iniciar o Gunicorn
 CMD ["gunicorn", "AudioQuiz.wsgi:application", "--bind", "0.0.0.0:8000"]
