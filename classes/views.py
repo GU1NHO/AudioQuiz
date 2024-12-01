@@ -543,18 +543,19 @@ def record_audio(duration=3, fs=44100):
 def transcribe_audio(request):
     if request.method == 'POST':
         try:
-            # Gravar o áudio usando sounddevice
-            audio_data, fs = record_audio(duration=3)  # Grava por 3 segundos
-            wav_path = os.path.join(settings.MEDIA_ROOT, 'classes', 'temp_audio.wav')
+            # Verificar se um arquivo foi enviado na requisição
+            if 'audio' not in request.FILES:
+                return JsonResponse({'success': False, 'error': 'Nenhum arquivo de áudio enviado.'}, status=400)
             
-            # Salvar como arquivo WAV
-            with wave.open(wav_path, 'wb') as wav_file:
-                wav_file.setnchannels(1)
-                wav_file.setsampwidth(2)  # 16-bit
-                wav_file.setframerate(fs)
-                wav_file.writeframes(audio_data.tobytes())
+            audio_file = request.FILES['audio']
+            wav_path = os.path.join(settings.MEDIA_ROOT, 'classes', 'uploaded_audio.wav')
+
+            # Salvar o arquivo enviado
+            with open(wav_path, 'wb') as f:
+                for chunk in audio_file.chunks():
+                    f.write(chunk)
             
-            logger.info(f"Áudio gravado e salvo como: {wav_path}")
+            logger.info(f"Áudio recebido e salvo como: {wav_path}")
             
             # Reconhecimento de fala
             r = sr.Recognizer()

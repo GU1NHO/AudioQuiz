@@ -18,8 +18,6 @@ RUN apt-get update && apt-get install -y \
 # Instale as dependências do Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Adiciona o usuário ao grupo de áudio
-RUN usermod -a -G audio root
 
 # Copie o código da aplicação para dentro do container
 COPY . .
