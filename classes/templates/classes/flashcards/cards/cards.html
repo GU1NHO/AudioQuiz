@@ -85,9 +85,9 @@ document.getElementById('record-btn').addEventListener('click', async () => {
 
     // Quando a gravação parar
     mediaRecorder.onstop = async () => {
-      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
       const formData = new FormData();
-      formData.append('audio', audioBlob, 'audio.wav');
+      formData.append('audio', audioBlob, 'audio.webm');
 
       const transcriptionOutput = document.getElementById('transcription-output');
       transcriptionOutput.textContent = 'Processando transcrição...';

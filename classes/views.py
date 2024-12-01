@@ -42,6 +42,7 @@ import speech_recognition as sr
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import subprocess
 
 class ClasseListView(ListView):
     model = Classe
@@ -539,30 +540,50 @@ def record_audio(duration=3, fs=44100):
     sd.wait()  # Espera até que a gravação termine
     return audio_data, fs
 
+logger = logging.getLogger(__name__)
+
 @csrf_exempt
 def transcribe_audio(request):
     if request.method == 'POST':
         try:
-            # Verificar se um arquivo foi enviado na requisição
+            # Verificar se o arquivo foi enviado
             if 'audio' not in request.FILES:
                 return JsonResponse({'success': False, 'error': 'Nenhum arquivo de áudio enviado.'}, status=400)
             
             audio_file = request.FILES['audio']
-            wav_path = os.path.join(settings.MEDIA_ROOT, 'classes', 'uploaded_audio.wav')
+            
+            # Define os caminhos para salvar os arquivos
+            media_dir = os.path.join(settings.MEDIA_ROOT, 'classes')
+            os.makedirs(media_dir, exist_ok=True)  # Garante que o diretório existe
 
-            # Salvar o arquivo enviado
-            with open(wav_path, 'wb') as f:
+            webm_path = os.path.join(media_dir, 'uploaded_audio.webm')
+            wav_path = os.path.join(media_dir, 'uploaded_audio.wav')
+
+            # Salvar o arquivo .webm enviado
+            with open(webm_path, 'wb') as f:
                 for chunk in audio_file.chunks():
                     f.write(chunk)
             
-            logger.info(f"Áudio recebido e salvo como: {wav_path}")
-            
-            # Reconhecimento de fala
+            logger.info(f"Arquivo .webm salvo em: {webm_path}")
+
+            # Converter o arquivo .webm para .wav usando FFmpeg
+            try:
+                subprocess.run(
+                    ['ffmpeg', '-i', webm_path, '-ar', '16000', '-ac', '1', wav_path],
+                    check=True
+                )
+                logger.info(f"Conversão para .wav concluída: {wav_path}")
+            except subprocess.CalledProcessError as e:
+                logger.error(f"Erro ao converter .webm para .wav: {str(e)}")
+                return JsonResponse({'success': False, 'error': 'Falha na conversão de áudio.'}, status=500)
+
+            # Processar o arquivo WAV com reconhecimento de fala
             r = sr.Recognizer()
             with sr.AudioFile(wav_path) as source:
                 audio_data = r.record(source)
                 transcribed_text = r.recognize_google(audio_data, language="pt-BR")
             
+            logger.info(f"Transcrição concluída: {transcribed_text}")
             return JsonResponse({'success': True, 'transcription': transcribed_text})
 
         except Exception as e:
